@@ -7,35 +7,38 @@ let input = document.querySelector('.location-input')
 input.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         console.log(input.value);
-        date();
         getWeather();
         input.value = '';
     }
 })
 
 async function getWeather() {
-    let response = await fetch(apiUrl + `&appid=${apiKey}` + `&q=${input.value}`)
-    let data = await response.json();
-    // console.log(data)
+    try {
+        let response = await fetch(apiUrl + `&appid=${apiKey}` + `&q=${input.value}`)
+        let data = await response.json();
+        console.log(data.city)
 
-    document.querySelector('.location').innerHTML = `${data.city.name}`;
-    document.querySelector('.weather-temp').innerHTML = `${data.list[0].main.temp}°C`;
-    document.querySelector('.weather-desc').innerHTML = `${data.list[0].weather[0].main}`;
-    document.querySelector('#pValue').innerHTML = `${data.list[0].main.pressure} mb`;
-    document.querySelector('#hValue').innerHTML = `${data.list[0].main.humidity} %`;
-    document.querySelector('#wValue').innerHTML = `${data.list[0].wind.speed} km/h`;
+        document.querySelector('.location').innerHTML = `${data.city.name}`;
+        document.querySelector('.weather-temp').innerHTML = `${data.list[0].main.temp}°C`;
+        document.querySelector('.weather-desc').innerHTML = `${data.list[0].weather[0].main}`;
+        document.querySelector('#pValue').innerHTML = `${data.list[0].main.pressure} mb`;
+        document.querySelector('#hValue').innerHTML = `${data.list[0].main.humidity} %`;
+        document.querySelector('#wValue').innerHTML = `${data.list[0].wind.speed} km/h`;
 
-    // Next Four Days Temperature
-    document.querySelector('#daytp1').innerHTML = `${data.list[1].main.temp}°C`;
-    document.querySelector('#daytp2').innerHTML = `${data.list[2].main.temp}°C`;
-    document.querySelector('#daytp3').innerHTML = `${data.list[3].main.temp}°C`;
-    document.querySelector('#daytp4').innerHTML = `${data.list[4].main.temp}°C`;
+        // Next Four Days Temperature
+        document.querySelector('#daytp1').innerHTML = `${data.list[1].main.temp}°C`;
+        document.querySelector('#daytp2').innerHTML = `${data.list[2].main.temp}°C`;
+        document.querySelector('#daytp3').innerHTML = `${data.list[3].main.temp}°C`;
+        document.querySelector('#daytp4').innerHTML = `${data.list[4].main.temp}°C`;
 
 
-    // document.querySelector('#daytp1').innerHTML = `${Math.round(data.list[1].main.temp)}°C`;
-    // document.querySelector('#daytp2').innerHTML = `${Math.round(data.list[2].main.temp)}°C`;
-    // document.querySelector('#daytp3').innerHTML = `${Math.round(data.list[3].main.temp)}°C`;
-    // document.querySelector('#daytp4').innerHTML = `${Math.round(data.list[4].main.temp)}°C`;
+        // document.querySelector('#daytp1').innerHTML = `${Math.round(data.list[1].main.temp)}°C`;
+        // document.querySelector('#daytp2').innerHTML = `${Math.round(data.list[2].main.temp)}°C`;
+        // document.querySelector('#daytp3').innerHTML = `${Math.round(data.list[3].main.temp)}°C`;
+        // document.querySelector('#daytp4').innerHTML = `${Math.round(data.list[4].main.temp)}°C`;
+    } catch (e) {
+        alert('Error : ' + e.message);
+    }
 }
 
 function date() {
@@ -133,6 +136,8 @@ function date() {
     }
 
 }
+date();
+
 
 // jQuery code from stackOverFlow for Placeholder blinking.
 function blinker() {
