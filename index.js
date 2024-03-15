@@ -18,8 +18,11 @@ async function getWeather() {
         let data = await response.json();
         console.log(data.city)
 
-        document.querySelector('.location').innerHTML = `${data.city.name}`;
-        document.querySelector('.weather-temp').innerHTML = `${data.list[0].main.temp}°C`;
+        let celsius = (data.list[0].main.temp).toFixed(2);
+        let fahrenheit = ((data.list[0].main.temp * 9 / 5) + 32).toFixed(2);
+
+        document.querySelector('.location').innerHTML = `${data.city.name}, ${data.city.country}`;
+        document.querySelector('.weather-temp').innerHTML = `${celsius}°C || ${fahrenheit}°F`;
         document.querySelector('.weather-desc').innerHTML = `${data.list[0].weather[0].main}`;
         document.querySelector('#pValue').innerHTML = `${data.list[0].main.pressure} mb`;
         document.querySelector('#hValue').innerHTML = `${data.list[0].main.humidity} %`;
